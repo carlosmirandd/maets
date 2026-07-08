@@ -1,17 +1,10 @@
 # 🎮 MAETS - Gerenciador de Jogos
 
-**Disciplina:** Banco de Dados I
-**Curso:** Engenharia de Computação
-**Instituição:** IFRJ - Campus Niterói
-**Data:** Julho de 2026
-
----
+<img width="1917" height="1080" alt="image" src="https://github.com/user-attachments/assets/d893336e-84b8-444d-8a14-4a0ec5544217" />
 
 ## 📖 Sobre o Projeto
 
-O **MAETS** (uma referência e anagrama à *Steam*) é uma aplicação web desenvolvida como avaliação prática para a disciplina de Banco de Dados I. O objetivo principal é demonstrar a modelagem, implementação e manipulação de um banco de dados relacional, totalmente integrado a uma interface gráfica. 
-
-<img width="1917" height="1080" alt="image" src="https://github.com/user-attachments/assets/d893336e-84b8-444d-8a14-4a0ec5544217" />
+O **MAETS** (uma referência e anagrama à *Steam*) é uma aplicação web desenvolvida como avaliação prática para a disciplina de Banco de Dados I do curso de Engenharia da Computação do IFRJ (07/2026). O objetivo principal é demonstrar a modelagem, implementação e manipulação de um banco de dados relacional, totalmente integrado a uma interface gráfica. 
 
 A solução funciona como uma biblioteca de gerenciamento de jogos, permitindo o controle completo de um catálogo de jogos, as desenvolvedoras responsáveis por eles e as avaliações da comunidade.
 
