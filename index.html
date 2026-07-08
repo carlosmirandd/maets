@@ -211,7 +211,7 @@
                 const { error } = await supabaseClient.from('desenvolvedoras').select('id').limit(1);
                 
                 if (error) {
-                    alert("⚠️ ACESSO NEGADO!\n\nErro do Supabase: " + error.message + "\n\nMiranda, você provavelmente esqueceu de desligar o RLS. Vai lá no SQL Editor do Supabase e roda o comando de DISABLE ROW LEVEL SECURITY!");
+                    alert("⚠️ ACESSO NEGADO!\n\nErro do Supabase: " + error.message);
                     return;
                 }
 
