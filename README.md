@@ -1,57 +1,60 @@
 # 🎮 MAETS - Gerenciador de Jogos
 
-[cite_start]**Disciplina:** Banco de Dados I [cite: 3]
-[cite_start]**Curso:** Bacharelado em Engenharia de Computação [cite: 3]
-[cite_start]**Instituição:** IFRJ - Campus Niterói [cite: 1, 2]
-[cite_start]**Data de Apresentação:** Julho de 2026 [cite: 114]
+**Disciplina:** Banco de Dados I
+**Curso:** Engenharia de Computação
+**Instituição:** IFRJ - Campus Niterói
+**Data:** Julho de 2026
 
 ---
 
 ## 📖 Sobre o Projeto
 
-[cite_start]O **MAETS** (um anagrama e referência sutil à *Steam*) é uma aplicação web desenvolvida como trabalho prático para a disciplina de Banco de Dados I[cite: 4]. [cite_start]O objetivo principal do projeto é demonstrar, na prática, a modelagem, implementação e manipulação de um banco de dados relacional integrado a uma interface gráfica[cite: 12]. 
+O **MAETS** (uma referência e anagrama à *Steam*) é uma aplicação web desenvolvida como avaliação prática para a disciplina de Banco de Dados I. O objetivo principal é demonstrar a modelagem, implementação e manipulação de um banco de dados relacional, totalmente integrado a uma interface gráfica. 
 
-A solução construída serve como uma biblioteca de gerenciamento, permitindo o controle de um catálogo de jogos, as desenvolvedoras responsáveis por eles e as avaliações dos usuários.
+<img width="3840" height="1080" alt="image" src="https://github.com/user-attachments/assets/f850c7d7-1553-4dc5-887d-984c517bb2d9" />
+
+A solução funciona como uma biblioteca de gerenciamento de jogos, permitindo o controle completo de um catálogo de jogos, as desenvolvedoras responsáveis por eles e as avaliações da comunidade.
 
 ## 🚀 Tecnologias Utilizadas
 
-* [cite_start]**Front-end:** HTML5, TailwindCSS, Vanilla JavaScript[cite: 84].
-* [cite_start]**Banco de Dados (BaaS):** Supabase (PostgreSQL)[cite: 48].
-* [cite_start]**Integração:** Supabase JS Client conectando o front-end ao banco em nuvem[cite: 105].
+* **Front-end:** HTML, CSS e JavaScript.
+* **Banco de Dados (BaaS):** Supabase (PostgreSQL).
+* **Integração:** Client JS do Supabase para conexão web e operações assíncronas.
 
 ---
 
 ## ✅ Critérios de Avaliação Atendidos
 
-O projeto e este repositório foram estruturados para atender rigorosamente a todos os requisitos propostos na especificação do trabalho:
+O projeto e este repositório foram estruturados para atender rigorosamente a todos os requisitos estipulados:
 
-### 1. Estrutura do Banco de Dados
-* [cite_start]**Tabelas Relacionadas:** Foram implementadas 3 tabelas principais (`desenvolvedoras`, `jogos` e `avaliacoes`), cumprindo o requisito estrutural[cite: 35].
-* [cite_start]**Tipos de Dados:** Cada tabela possui 5 campos ou mais, abrangendo os tipos obrigatórios exigidos: textuais, numéricos e datas[cite: 37].
-* [cite_start]**Restrições de Integridade:** Implementação adequada de `PRIMARY KEY` e `FOREIGN KEY` no modelo relacional[cite: 38].
-* [cite_start]**Regras de Exclusão:** Foi configurada a regra **`RESTRICT`** nas chaves estrangeiras (`ON DELETE RESTRICT`)[cite: 39]. [cite_start]A interface gráfica trata essa regra contendo lógicas de negócio: ela impede e avisa o usuário caso tente deletar uma desenvolvedora que possui jogos vinculados [cite: 82][cite_start], preservando a integridade referencial[cite: 42].
+### 1. Modelagem e Estrutura do Banco
+* **Tabelas Relacionadas:** O sistema possui no mínimo 3 tabelas principais integradas.
+* **Tipos de Dados:** Cada tabela possui mais de 5 campos, englobando os tipos obrigatórios exigidos (textuais, numéricos e datas).
+* **Restrições de Integridade:** Utilização correta de chaves primárias (`PRIMARY KEY`) e estrangeiras (`FOREIGN KEY`), além das regras de exclusão. A aplicação possui regras de negócio (ex: `RESTRICT`) que impedem a exclusão de uma desenvolvedora caso ela já tenha jogos atrelados, preservando a integridade referencial.
 
 ### 2. Operações CRUD
-* [cite_start]Operações completas de **Cadastro, Alteração, Exclusão e Listagem (CRUD)** foram implementadas através da interface web para todas as tabelas (superando o requisito mínimo de 2 tabelas)[cite: 36, 68, 69]. [cite_start]As ações no front-end refletem diretamente comandos `INSERT`, `UPDATE`, `DELETE` e `SELECT` no banco[cite: 70].
+* A interface web implementa operações completas de Cadastro (`INSERT`), Leitura (`SELECT`), Atualização (`UPDATE`) e Exclusão (`DELETE`) para as tabelas principais, enviando os comandos diretamente para o banco em nuvem.
 
 ### 3. Consultas e Filtros Complexos
-A aba "Consultas Especiais" na aplicação (e os scripts do banco) oferece suporte às pesquisas avançadas estipuladas:
-* [cite_start]**Consulta em tabela específica:** Pesquisa universal com filtros dinâmicos na interface, utilizando o equivalente a `SELECT` e cláusulas `WHERE` com busca exata e parcial[cite: 72, 75].
-* [cite_start]**Consultas em mais de uma tabela:** Utilização de `INNER JOIN` para cruzar dados de entidades relacionadas (ex: listar o Título do Jogo cruzado com o Nome e País da Desenvolvedora)[cite: 76, 79].
-* [cite_start]**Subconsultas com Negação:** Uso do operador `NOT IN` para listar dinamicamente, por exemplo, desenvolvedoras que não possuem jogos cadastrados na plataforma[cite: 80, 81].
+* **Consulta em tabela específica:** A interface possui barras de pesquisa dinâmicas, permitindo buscar registros específicos através de cláusulas `WHERE`.
+* **Consultas em mais de uma tabela:** Utilização de `INNER JOIN` para cruzar informações, permitindo, por exemplo, listar um jogo junto aos dados de sua desenvolvedora correspondente.
+* **Subconsultas e Filtros Avançados:** Implementação de lógicas avançadas utilizando `NOT IN` / `EXISTS` para buscas específicas (ex: filtrar desenvolvedoras que ainda não possuem jogos lançados na plataforma).
 
 ### 4. Scripts SQL Entregues
-[cite_start]Todo o embasamento do banco de dados encontra-se versionado na raiz deste repositório[cite: 95, 97], contendo:
-* [cite_start]`criarbd.sql`: Script responsável pela criação do banco, tabelas e restrições[cite: 50].
-* [cite_start]`insertbd.sql`: Popula o banco com mais de 5 registros por tabela[cite: 51].
-* [cite_start]`deletartabelas.sql`: Script de deleção (limpeza) dos dados[cite: 55].
-* [cite_start]`consultas.sql`: Demonstração em SQL puro das consultas realizadas e geradas pela integração[cite: 56, 58, 60].
+Todo o esquema do banco de dados encontra-se versionado na raiz deste repositório nos seguintes arquivos:
+* `criarbd.sql`: Script DDL para criação do banco de dados, tabelas e restrições estruturais.
+* `insertbd.sql`: Script DML que popula as tabelas com os registros iniciais (mais de 5 inserções por tabela).
+* `deletartabelas.sql`: Script para exclusão/limpeza dos dados.
+* `consultas.sql`: Arquivo contendo todas as queries utilizadas na aplicação (consultas agregadas, com filtros, subconsultas e JOINs).
 
 ---
 
 ## ⚙️ Como Executar o Projeto
 
-1. Clone este repositório em sua máquina:
+1. Clone este repositório em sua máquina local:
    ```bash
    git clone [https://github.com/carlosmirandd/maets.git](https://github.com/carlosmirandd/maets.git)
 
+2. Abra o arquivo `index.html` em qualquer navegador web de sua preferência.
+3. Para que a aplicação se conecte com o seu banco de dados hospedado no Supabase crie um projeto e busque pela URL e a Anon Key em `Project Settings > API Keys` para autenticar via interface.
+4. Pronto! O dashboard será carregado e você poderá navegar pelas abas para gerenciar o catálogo.
