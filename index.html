@@ -152,7 +152,7 @@
             <div class="space-y-6">
                 <!-- consulta 1: pesquisa universal dinâmica -->
                 <div class="bg-slate-900 p-6 rounded-lg shadow-xl border border-slate-700">
-                    <h2 class="text-xl font-bold mb-2 text-white">1. Pesquisa Universal (Filtro Dinâmico)</h2>
+                    <h2 class="text-xl font-bold mb-2 text-white">Pesquisa Universal (Filtro Dinâmico)</h2>
                     <p class="text-slate-400 text-sm mb-4">Escolha a base de dados, a coluna e digite o valor da busca.</p>
                     <div class="flex gap-2 mb-4 flex-wrap">
                         <select id="search-table" class="bg-slate-800 border border-slate-600 text-white p-2 rounded focus:outline-none focus:border-blue-500" onchange="updateSearchFields()">
@@ -174,7 +174,7 @@
 
                 <!-- consulta 2 -->
                 <div class="bg-slate-900 p-6 rounded-lg shadow-xl border border-slate-700">
-                    <h2 class="text-xl font-bold mb-2 text-white">2. Consulta de +1 Tabela (INNER JOIN)</h2>
+                    <h2 class="text-xl font-bold mb-2 text-white">Consulta de +1 Tabela (INNER JOIN)</h2>
                     <p class="text-slate-400 text-sm mb-4">Listar Título do Jogo e Nome da Desenvolvedora.</p>
                     <button onclick="runQuery2()" class="bg-blue-600 text-white px-4 py-2 rounded mb-4 hover:bg-blue-500 font-bold">Executar INNER JOIN</button>
                     <div id="result-2" class="bg-slate-950 border border-slate-800 rounded overflow-auto max-h-64"></div>
@@ -182,7 +182,7 @@
 
                 <!-- consulta 3 -->
                 <div class="bg-slate-900 p-6 rounded-lg shadow-xl border border-slate-700">
-                    <h2 class="text-xl font-bold mb-2 text-white">3. Subconsulta com NOT IN</h2>
+                    <h2 class="text-xl font-bold mb-2 text-white">Subconsulta com NOT IN</h2>
                     <p class="text-slate-400 text-sm mb-4">Listar Desenvolvedoras que NÃO possuem jogos cadastrados.</p>
                     <button onclick="runQuery3()" class="bg-blue-600 text-white px-4 py-2 rounded mb-4 hover:bg-blue-500 font-bold">Executar NOT IN</button>
                     <div id="result-3" class="bg-slate-950 border border-slate-800 rounded overflow-auto max-h-64"></div>
@@ -190,7 +190,7 @@
 
                 <!-- consulta 4 -->
                 <div class="bg-slate-900 p-6 rounded-lg shadow-xl border border-slate-700">
-                    <h2 class="text-xl font-bold mb-2 text-white">4. 2ª Consulta de +1 Tabela (INNER JOIN c/ Filtro)</h2>
+                    <h2 class="text-xl font-bold mb-2 text-white">Consulta de +1 Tabela (INNER JOIN c/ Filtro)</h2>
                     <p class="text-slate-400 text-sm mb-4">Listar Jogos feitos por Desenvolvedoras de um País específico.</p>
                     <div class="flex gap-2 mb-4">
                         <input type="text" id="search-pais" placeholder="Digite o País (ex: Japão)" class="bg-slate-800 border border-slate-600 text-white p-2 rounded focus:outline-none focus:border-blue-500 w-64">
