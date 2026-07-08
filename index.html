@@ -21,6 +21,7 @@
         <div class="space-x-2">
             <button onclick="changeTab('devs')" class="hover:bg-slate-700 hover:text-white px-4 py-2 rounded transition-colors duration-200">Desenvolvedoras</button>
             <button onclick="changeTab('jogos')" class="hover:bg-slate-700 hover:text-white px-4 py-2 rounded transition-colors duration-200">Jogos</button>
+            <button onclick="changeTab('avaliacoes')" class="hover:bg-slate-700 hover:text-white px-4 py-2 rounded transition-colors duration-200">Avaliações</button>
             <button onclick="changeTab('consultas')" class="hover:bg-slate-700 px-4 py-2 rounded font-bold text-blue-400">Consultas Especiais</button>
         </div>
     </nav>
@@ -110,7 +111,43 @@
             </div>
         </div>
 
-        <!-- consultas Exigidas -->
+        <!-- avaliações (CRUD 3) -->
+        <div id="tab-avaliacoes" class="tab-content hidden">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- form -->
+                <div class="bg-slate-900 p-6 rounded-lg shadow-xl col-span-1 border border-slate-700">
+                    <h2 class="text-xl font-bold mb-4 text-white" id="aval-form-title">Cadastrar Avaliação</h2>
+                    <input type="hidden" id="aval-id">
+                    <div class="space-y-3">
+                        <select id="aval-jogo" class="w-full bg-slate-800 border border-slate-600 text-white p-2 rounded focus:outline-none focus:border-blue-500"></select>
+                        <input type="number" id="aval-nota" placeholder="Nota (0 a 10)" min="0" max="10" class="w-full bg-slate-800 border border-slate-600 text-white p-2 rounded focus:outline-none focus:border-blue-500">
+                        <textarea id="aval-comentario" placeholder="Comentário da Análise" rows="3" class="w-full bg-slate-800 border border-slate-600 text-white p-2 rounded focus:outline-none focus:border-blue-500"></textarea>
+                        <input type="date" id="aval-data" class="w-full bg-slate-800 border border-slate-600 text-white p-2 rounded focus:outline-none focus:border-blue-500 [color-scheme:dark]">
+                        <button onclick="saveAvaliacao()" class="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-500 font-bold mt-2">Salvar</button>
+                        <button onclick="resetAvaliacaoForm()" class="w-full bg-slate-700 text-white p-2 rounded hover:bg-slate-600">Cancelar</button>
+                    </div>
+                </div>
+                <!-- list -->
+                <div class="bg-slate-900 p-6 rounded-lg shadow-xl col-span-2 overflow-auto border border-slate-700">
+                    <h2 class="text-xl font-bold mb-4 text-white">Lista de Avaliações</h2>
+                    <table class="w-full text-left border-collapse text-sm">
+                        <thead>
+                            <tr class="bg-slate-800 text-slate-300">
+                                <th class="p-3 border-b border-slate-700">ID</th>
+                                <th class="p-3 border-b border-slate-700">Jogo</th>
+                                <th class="p-3 border-b border-slate-700">Nota</th>
+                                <th class="p-3 border-b border-slate-700">Comentário</th>
+                                <th class="p-3 border-b border-slate-700 text-center">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="aval-list"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        
+        <!-- consultas exigidas -->
         <div id="tab-consultas" class="tab-content hidden">
             <div class="space-y-6">
                 <!-- consulta 1 -->
