@@ -1,43 +1,42 @@
 -- =========================================================================
--- CONSULTA COM AGREGAÇÃO, FILTRO E MAIS DE UMA TABELA (JOIN + GROUP BY / HAVING)
--- Objetivo: Mostrar a média de preços e qtd de jogos por DESENVOLVEDORA, 
--- apenas para as que têm jogos com média de preço maior que 100
+-- 1. PESQUISA UNIVERSAL (FILTRO DINÂMICO)
+-- Como a interface escolhe as colunas dinamicamente, abaixo estão os 
+-- equivalentes SQL gerados pelo Supabase para buscas exatas e parciais.
 -- =========================================================================
-/*
-SELECT d.nome AS desenvolvedora, COUNT(j.id) AS qtd_jogos, AVG(j.preco) AS preco_medio 
-FROM desenvolvedoras d
-INNER JOIN jogos j ON d.id = j.id_desenvolvedora
-GROUP BY d.nome 
-HAVING AVG(j.preco) > 100;
-*/
+-- Exemplo A: Busca exata (usado no JS para IDs, Notas e Preços usando .eq)
+SELECT * FROM jogos WHERE id = 1;
+
+-- Exemplo B: Busca parcial/texto (usado no JS para Nomes e Gêneros usando .ilike)
+SELECT * FROM desenvolvedoras WHERE nome ILIKE '%Nintendo%';
+
 
 -- =========================================================================
--- SUBCONSULTA COM ANY/ALL
--- Objetivo: Encontrar jogos que são mais caros que TODOS os jogos de 'Ação'
+-- 2. CONSULTA DE +1 TABELA (INNER JOIN)
+-- Objetivo: Listar Título e Preço do Jogo + Nome e País da Desenvolvedora.
 -- =========================================================================
-/*
-SELECT titulo, preco FROM jogos 
-WHERE preco > ALL (SELECT preco FROM jogos WHERE genero = 'Ação');
-*/
+SELECT j.titulo AS jogo, j.preco, d.nome AS desenvolvedora, d.pais_origem AS pais
+FROM jogos j
+INNER JOIN desenvolvedoras d ON j.id_desenvolvedora = d.id;
+
 
 -- =========================================================================
--- SUBCONSULTA COM EXISTS
--- Objetivo: Listar desenvolvedoras que TÊM jogos cadastrados do gênero 'RPG'
+-- 3. SUBCONSULTA COM NOT IN
+-- Objetivo: Listar Desenvolvedoras que NÃO possuem jogos cadastrados.
 -- =========================================================================
-/*
-SELECT nome FROM desenvolvedoras d 
-WHERE EXISTS (
-    SELECT 1 FROM jogos j WHERE j.id_desenvolvedora = d.id AND j.genero = 'RPG'
-);
-*/
-
--- =========================================================================
--- SUBCONSULTA COM NOT IN (Usado no Front-end)
--- Objetivo: Listar desenvolvedoras que NÃO possuem nenhum jogo cadastrado
--- =========================================================================
-/*
-SELECT nome FROM desenvolvedoras 
+SELECT id, nome, pais_origem 
+FROM desenvolvedoras 
 WHERE id NOT IN (
-    SELECT id_desenvolvedora FROM jogos WHERE id_desenvolvedora IS NOT NULL
+    SELECT id_desenvolvedora 
+    FROM jogos 
+    WHERE id_desenvolvedora IS NOT NULL
 );
-*/
+
+
+-- =========================================================================
+-- 4. 2ª CONSULTA DE +1 TABELA (INNER JOIN C/ FILTRO)
+-- Objetivo: Listar Jogos feitos por Desenvolvedoras de um País específico.
+-- =========================================================================
+SELECT j.titulo AS jogo, j.genero, d.nome AS desenvolvedora, d.pais_origem AS pais
+FROM jogos j
+INNER JOIN desenvolvedoras d ON j.id_desenvolvedora = d.id
+WHERE d.pais_origem ILIKE '%Japão%';
