@@ -10,6 +10,8 @@ O **MAETS** (uma referência e anagrama à *Steam*) é uma aplicação web desen
 
 A solução funciona como uma biblioteca de gerenciamento de jogos, permitindo o controle completo de um catálogo de jogos, as desenvolvedoras responsáveis por eles e as avaliações da comunidade.
 
+<img width="1101" height="377" alt="image" src="https://github.com/user-attachments/assets/deb5ac59-eb00-4c1c-873a-4d21ce7d98ce" />
+
 ## 🚀 Tecnologias Utilizadas
 
 * **Front-end:** HTML, CSS e JavaScript.
