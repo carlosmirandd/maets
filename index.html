@@ -150,31 +150,42 @@
         <!-- consultas exigidas -->
         <div id="tab-consultas" class="tab-content hidden">
             <div class="space-y-6">
-                <!-- consulta 1 -->
+                <!-- consulta 1: pesquisa universal dinâmica -->
                 <div class="bg-slate-900 p-6 rounded-lg shadow-xl border border-slate-700">
-                    <h2 class="text-xl font-bold mb-2 text-white">1. Consulta em 1 Tabela (WHERE)</h2>
-                    <p class="text-slate-400 text-sm mb-4">Pesquisar jogos por gênero.</p>
-                    <div class="flex gap-2 mb-4">
-                        <input type="text" id="search-genero" placeholder="Digite o Gênero (ex: RPG)" class="bg-slate-800 border border-slate-600 text-white p-2 rounded focus:outline-none focus:border-blue-500 w-64">
-                        <button onclick="runQuery1()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-500">Pesquisar</button>
+                    <h2 class="text-xl font-bold mb-2 text-white">1. Pesquisa Universal (Filtro Dinâmico)</h2>
+                    <p class="text-slate-400 text-sm mb-4">Escolha a base de dados, a coluna e digite o valor da busca.</p>
+                    <div class="flex gap-2 mb-4 flex-wrap">
+                        <select id="search-table" class="bg-slate-800 border border-slate-600 text-white p-2 rounded focus:outline-none focus:border-blue-500" onchange="updateSearchFields()">
+                            <option value="desenvolvedoras">Desenvolvedoras</option>
+                            <option value="jogos">Jogos</option>
+                            <option value="avaliacoes">Avaliações</option>
+                        </select>
+                        <select id="search-field" class="bg-slate-800 border border-slate-600 text-white p-2 rounded focus:outline-none focus:border-blue-500 w-32">
+                            <!-- Preenchido via JavaScript -->
+                        </select>
+                        <input type="text" id="search-value" placeholder="Digite o termo da busca..." class="bg-slate-800 border border-slate-600 text-white p-2 rounded focus:outline-none focus:border-blue-500 flex-1">
+                        <button onclick="runUniversalSearch()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-500 font-bold">Pesquisar</button>
                     </div>
-                    <pre id="result-1" class="bg-slate-950 border border-slate-800 p-4 rounded text-sm text-green-400 overflow-auto max-h-40 font-mono"></pre>
+                    <!-- container da tabela dinâmica -->
+                    <div id="result-1" class="bg-slate-950 border border-slate-800 rounded overflow-auto max-h-64">
+                        <p class="text-slate-500 p-4 italic">Os resultados aparecerão aqui...</p>
+                    </div>
                 </div>
 
                 <!-- consulta 2 -->
                 <div class="bg-slate-900 p-6 rounded-lg shadow-xl border border-slate-700">
                     <h2 class="text-xl font-bold mb-2 text-white">2. Consulta de +1 Tabela (INNER JOIN)</h2>
                     <p class="text-slate-400 text-sm mb-4">Listar Título do Jogo e Nome da Desenvolvedora.</p>
-                    <button onclick="runQuery2()" class="bg-blue-600 text-white px-4 py-2 rounded mb-4 hover:bg-blue-500">Executar INNER JOIN</button>
-                    <pre id="result-2" class="bg-slate-950 border border-slate-800 p-4 rounded text-sm text-green-400 overflow-auto max-h-40 font-mono"></pre>
+                    <button onclick="runQuery2()" class="bg-blue-600 text-white px-4 py-2 rounded mb-4 hover:bg-blue-500 font-bold">Executar INNER JOIN</button>
+                    <div id="result-2" class="bg-slate-950 border border-slate-800 rounded overflow-auto max-h-64"></div>
                 </div>
 
                 <!-- consulta 3 -->
                 <div class="bg-slate-900 p-6 rounded-lg shadow-xl border border-slate-700">
                     <h2 class="text-xl font-bold mb-2 text-white">3. Subconsulta com NOT IN</h2>
                     <p class="text-slate-400 text-sm mb-4">Listar Desenvolvedoras que NÃO possuem jogos cadastrados.</p>
-                    <button onclick="runQuery3()" class="bg-blue-600 text-white px-4 py-2 rounded mb-4 hover:bg-blue-500">Executar NOT IN</button>
-                    <pre id="result-3" class="bg-slate-950 border border-slate-800 p-4 rounded text-sm text-green-400 overflow-auto max-h-40 font-mono"></pre>
+                    <button onclick="runQuery3()" class="bg-blue-600 text-white px-4 py-2 rounded mb-4 hover:bg-blue-500 font-bold">Executar NOT IN</button>
+                    <div id="result-3" class="bg-slate-950 border border-slate-800 rounded overflow-auto max-h-64"></div>
                 </div>
 
                 <!-- consulta 4 -->
@@ -183,9 +194,9 @@
                     <p class="text-slate-400 text-sm mb-4">Listar Jogos feitos por Desenvolvedoras de um País específico.</p>
                     <div class="flex gap-2 mb-4">
                         <input type="text" id="search-pais" placeholder="Digite o País (ex: Japão)" class="bg-slate-800 border border-slate-600 text-white p-2 rounded focus:outline-none focus:border-blue-500 w-64">
-                        <button onclick="runQuery4()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-500">Pesquisar País</button>
+                        <button onclick="runQuery4()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-500 font-bold">Pesquisar País</button>
                     </div>
-                    <pre id="result-4" class="bg-slate-950 border border-slate-800 p-4 rounded text-sm text-green-400 overflow-auto max-h-40 font-mono"></pre>
+                    <div id="result-4" class="bg-slate-950 border border-slate-800 rounded overflow-auto max-h-64"></div>
                 </div>
             </div>
         </div>
@@ -540,62 +551,129 @@
            CONSULTAS
            ========================================== */
         
-        // 1. Consulta simples WHERE
-        async function runQuery1() {
-            const genero = document.getElementById('search-genero').value;
-            const { data } = await supabaseClient.from('jogos').select('titulo, genero, preco').ilike('genero', `%${genero}%`);
-            document.getElementById('result-1').innerText = JSON.stringify(data, null, 2);
+        // motor gráfico: transforma qualquer json em uma tabela html bonitinha
+        function renderTable(data, containerId) {
+            const container = document.getElementById(containerId);
+            if (!data || data.length === 0) {
+                container.innerHTML = '<p class="text-yellow-400 p-4 font-bold">Nenhum registro encontrado para esta busca.</p>';
+                return;
+            }
+
+            const headers = Object.keys(data[0]);
+            let html = '<table class="w-full text-left border-collapse text-sm text-white"><thead><tr class="bg-slate-800 text-slate-300">';
+            
+            // cabeçalhos
+            headers.forEach(h => html += `<th class="p-3 border-b border-slate-700 capitalize">${h.replace('_', ' ')}</th>`);
+            html += '</tr></thead><tbody>';
+            
+            // linhas
+            data.forEach(row => {
+                html += '<tr class="border-b border-slate-700 hover:bg-slate-800 transition-colors">';
+                headers.forEach(h => {
+                    html += `<td class="p-3">${row[h] !== null ? row[h] : '-'}</td>`;
+                });
+                html += '</tr>';
+            });
+            html += '</tbody></table>';
+            container.innerHTML = html;
         }
 
-        // 2. Consulta INNER JOIN (Mais de uma tabela)
+        // atualiza os campos do select de acordo com a tabela escolhida
+        function updateSearchFields() {
+            const table = document.getElementById('search-table').value;
+            const fieldSelect = document.getElementById('search-field');
+            fieldSelect.innerHTML = '';
+            
+            let options = [];
+            if(table === 'desenvolvedoras') options = ['id', 'nome', 'pais_origem'];
+            if(table === 'jogos') options = ['id', 'titulo', 'genero', 'preco'];
+            if(table === 'avaliacoes') options = ['id', 'nota'];
+            
+            options.forEach(opt => {
+                fieldSelect.innerHTML += `<option value="${opt}">${opt.toUpperCase()}</option>`;
+            });
+        }
+
+        // 1. pesquisa universal (substitui a consulta 1 antiga)
+        async function runUniversalSearch() {
+            const table = document.getElementById('search-table').value;
+            const field = document.getElementById('search-field').value;
+            const value = document.getElementById('search-value').value;
+            
+            let query = supabaseClient.from(table).select('*');
+            
+            if (value) {
+                // se for id, nota ou preço, o banco precisa de busca exata (.eq)
+                if(field === 'id' || field === 'preco' || field === 'nota') {
+                    query = query.eq(field, value);
+                } else {
+                    // se for texto, busca parcial (.ilike)
+                    query = query.ilike(field, `%${value}%`);
+                }
+            }
+            
+            const { data, error } = await query;
+            if (error) {
+                document.getElementById('result-1').innerHTML = `<p class="text-red-400 p-4">Erro: ${error.message}</p>`;
+                return;
+            }
+            renderTable(data, 'result-1');
+        }
+
+        // 2. consulta inner join (mais de uma tabela)
         async function runQuery2() {
-            const { data } = await supabaseClient.from('jogos').select(`
+            const { data, error } = await supabaseClient.from('jogos').select(`
                 titulo,
                 preco,
-                desenvolvedoras (
-                    nome,
-                    pais_origem
-                )
+                desenvolvedoras ( nome, pais_origem )
             `);
-            document.getElementById('result-2').innerText = JSON.stringify(data, null, 2);
+            if (error) return;
+            
+            // achatamos os dados do join para a tabela ficar perfeita
+            const flatData = data.map(item => ({
+                Jogo: item.titulo,
+                Preço: `R$ ${item.preco}`,
+                Desenvolvedora: item.desenvolvedoras ? item.desenvolvedoras.nome : 'Sem Dev',
+                País: item.desenvolvedoras ? item.desenvolvedoras.pais_origem : '-'
+            }));
+            renderTable(flatData, 'result-2');
         }
 
-        // 3. Consulta com NOT IN
+        // 3. consulta com not in
         async function runQuery3() {
             const { data: jogos } = await supabaseClient.from('jogos').select('id_desenvolvedora');
-            const devsComJogos = jogos.map(j => j.id_desenvolvedora);
+            const devsComJogos = jogos.map(j => j.id_desenvolvedora).filter(id => id !== null);
             
-            const { data } = await supabaseClient.from('desenvolvedoras').select('id, nome')
+            const { data, error } = await supabaseClient.from('desenvolvedoras').select('id, nome, pais_origem')
                                    .not('id', 'in', `(${devsComJogos.join(',')})`);
-                                   
-            if(data.length === 0) {
-                document.getElementById('result-3').innerText = "Nenhuma encontrada. Tente cadastrar uma Desenvolvedora e NÃO cadastrar um jogo para ela para testar.";
-            } else {
-                document.getElementById('result-3').innerText = JSON.stringify(data, null, 2);
-            }
+            
+            if (error) return;
+            renderTable(data, 'result-3');
         }
 
-        // 4. Segunda Consulta INNER JOIN (Jogos por País da Dev)
+        // 4. segunda consulta inner join (jogos por país da dev)
         async function runQuery4() {
             const pais = document.getElementById('search-pais').value;
-            // O !inner força o Supabase a converter a requisição num autêntico INNER JOIN no PostgreSQL
+            // o !inner força o supabase a converter a requisição num autêntico inner join no postgresql
             const { data, error } = await supabaseClient.from('jogos').select(`
                 titulo,
                 genero,
-                desenvolvedoras!inner (
-                    nome,
-                    pais_origem
-                )
+                desenvolvedoras!inner ( nome, pais_origem )
             `).ilike('desenvolvedoras.pais_origem', `%${pais}%`);
             
-            if (error) {
-                document.getElementById('result-4').innerText = "Erro: " + error.message;
-            } else if (data.length === 0) {
-                document.getElementById('result-4').innerText = "Nenhum jogo encontrado para esse país.";
-            } else {
-                document.getElementById('result-4').innerText = JSON.stringify(data, null, 2);
-            }
+            if (error) return;
+
+            const flatData = data.map(item => ({
+                Jogo: item.titulo,
+                Gênero: item.genero,
+                Desenvolvedora: item.desenvolvedoras.nome,
+                País: item.desenvolvedoras.pais_origem
+            }));
+            renderTable(flatData, 'result-4');
         }
+
+        // inicia preenchendo os campos da barra de pesquisa na inicialização
+        updateSearchFields();
     </script>
 </body>
 </html>
