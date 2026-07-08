@@ -11,7 +11,7 @@
 
 O **MAETS** (uma referência e anagrama à *Steam*) é uma aplicação web desenvolvida como avaliação prática para a disciplina de Banco de Dados I. O objetivo principal é demonstrar a modelagem, implementação e manipulação de um banco de dados relacional, totalmente integrado a uma interface gráfica. 
 
-<img width="3840" height="1080" alt="image" src="https://github.com/user-attachments/assets/f850c7d7-1553-4dc5-887d-984c517bb2d9" />
+<img width="1917" height="1080" alt="image" src="https://github.com/user-attachments/assets/d893336e-84b8-444d-8a14-4a0ec5544217" />
 
 A solução funciona como uma biblioteca de gerenciamento de jogos, permitindo o controle completo de um catálogo de jogos, as desenvolvedoras responsáveis por eles e as avaliações da comunidade.
 
