@@ -2,6 +2,8 @@
 
 <img width="1917" height="1080" alt="image" src="https://github.com/user-attachments/assets/d893336e-84b8-444d-8a14-4a0ec5544217" />
 
+---
+
 ## 📖 Sobre o Projeto
 
 O **MAETS** (uma referência e anagrama à *Steam*) é uma aplicação web desenvolvida como avaliação prática para a disciplina de Banco de Dados I do curso de Engenharia da Computação do IFRJ (07/2026). O objetivo principal é demonstrar a modelagem, implementação e manipulação de um banco de dados relacional, totalmente integrado a uma interface gráfica. 
@@ -51,3 +53,7 @@ Todo o esquema do banco de dados encontra-se versionado na raiz deste repositór
 2. Abra o arquivo `index.html` em qualquer navegador web de sua preferência.
 3. Para que a aplicação se conecte com o seu banco de dados hospedado no Supabase crie um projeto e busque pela URL e a Anon Key em `Project Settings > API Keys` para autenticar via interface.
 4. Pronto! O dashboard será carregado e você poderá navegar pelas abas para gerenciar o catálogo.
+
+---
+
+*Feito por Carlos Miranda*
