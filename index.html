@@ -223,6 +223,9 @@
                 loadDevs();
                 loadJogos();
                 loadDevSelect();
+                loadAvaliacoes();
+                loadJogoSelect();
+                
             } catch (err) {
                 alert("Erro grave na conexão: " + err.message + "\n\nSua URL está com 'https://' no começo?");
             }
@@ -392,6 +395,7 @@
 
             resetJogoForm();
             loadJogos();
+            loadJogoSelect();
         }
 
         function editJogo(id, id_dev, titulo, data, preco, genero) {
@@ -405,9 +409,22 @@
         }
 
         async function deleteJogo(id) {
-            await supabaseClient.from('jogos').delete().eq('id', id);
-            loadJogos();
-        }
+         // Regra RESTRICT para garantir integridade referencial com as Avaliações
+         const { count, error } = await supabaseClient
+             .from('avaliacoes')
+             .select('*', { count: 'exact', head: true })
+             .eq('id_jogo', id);
+
+         if (count > 0) {
+             alert(`⚠️ REGRA DE NEGÓCIO (Integridade Referencial): \n\nEste jogo possui ${count} avaliação(ões) cadastrada(s). Você não pode excluí-lo antes de remover suas avaliações (Regra: RESTRICT).`);
+             return;
+         }
+
+         await supabaseClient.from('jogos').delete().eq('id', id);
+         loadJogos();
+         loadJogoSelect();
+     }
+
 
         function resetJogoForm() {
             document.getElementById('jogo-id').value = '';
@@ -419,6 +436,106 @@
             document.getElementById('jogo-form-title').innerText = "Cadastrar Jogo";
         }
 
+        /* ==========================================
+           CRUD AVALIAÇÕES
+           ========================================== */
+        async function loadJogoSelect() {
+            const { data } = await supabaseClient.from('jogos').select('id, titulo');
+            const select = document.getElementById('aval-jogo');
+            select.innerHTML = '<option value="">Selecione um Jogo</option>';
+            if(data) data.forEach(j => {
+                select.innerHTML += `<option value="${j.id}">${j.titulo}</option>`;
+            });
+        }
+
+        async function loadAvaliacoes() {
+            // Usamos INNER JOIN via supabase js para trazer o título do jogo junto com o ID
+            const { data, error } = await supabaseClient.from('avaliacoes').select(`
+                id,
+                nota,
+                comentario,
+                data_avaliacao,
+                id_jogo,
+                jogos ( titulo )
+            `).order('id', { ascending: true });
+            
+            if (error) {
+                alert("Erro ao carregar avaliações: " + error.message);
+                return;
+            }
+
+            const tbody = document.getElementById('aval-list');
+            tbody.innerHTML = '';
+            if(data) data.forEach(a => {
+                const tituloJogo = a.jogos ? a.jogos.titulo : 'Jogo Desconhecido';
+                
+                tbody.innerHTML += `
+                    <tr class="border-b border-slate-700 hover:bg-slate-800 transition-colors">
+                        <td class="p-3">${a.id}</td>
+                        <td class="p-3 font-semibold text-white">${tituloJogo}</td>
+                        <td class="p-3 font-bold ${a.nota >= 7 ? 'text-green-400' : (a.nota >= 5 ? 'text-yellow-400' : 'text-red-400')}">${a.nota}/10</td>
+                        <td class="p-3 text-slate-400 truncate max-w-xs" title="${a.comentario}">${a.comentario || 'Sem comentário'}</td>
+                        <td class="p-3 text-center space-x-3">
+                            <button onclick="editAvaliacao(${a.id}, ${a.id_jogo}, ${a.nota}, '${a.comentario}', '${a.data_avaliacao}')" class="text-blue-400 hover:text-blue-300">Editar</button>
+                            <button onclick="deleteAvaliacao(${a.id})" class="text-red-400 hover:text-red-300">Excluir</button>
+                        </td>
+                    </tr>`;
+            });
+        }
+
+        async function saveAvaliacao() {
+            const id = document.getElementById('aval-id').value;
+            const nota = document.getElementById('aval-nota').value;
+            const data_aval = document.getElementById('aval-data').value;
+            
+            const payload = {
+                id_jogo: document.getElementById('aval-jogo').value || null,
+                nota: nota ? parseFloat(nota) : null,
+                comentario: document.getElementById('aval-comentario').value,
+                data_avaliacao: data_aval ? data_aval : null
+            };
+
+            let reqError;
+            if (id) {
+                const { error } = await supabaseClient.from('avaliacoes').update(payload).eq('id', id);
+                reqError = error;
+            } else {
+                const { error } = await supabaseClient.from('avaliacoes').insert([payload]);
+                reqError = error;
+            }
+            
+            if (reqError) {
+                alert("⚠️ Erro do banco ao salvar Avaliação: " + reqError.message);
+                return;
+            }
+
+            resetAvaliacaoForm();
+            loadAvaliacoes();
+        }
+
+        function editAvaliacao(id, id_jogo, nota, comentario, data) {
+            document.getElementById('aval-id').value = id;
+            document.getElementById('aval-jogo').value = id_jogo;
+            document.getElementById('aval-nota').value = nota;
+            document.getElementById('aval-comentario').value = comentario === 'undefined' ? '' : comentario;
+            document.getElementById('aval-data').value = data;
+            document.getElementById('aval-form-title').innerText = "Editar Avaliação";
+        }
+
+        async function deleteAvaliacao(id) {
+            await supabaseClient.from('avaliacoes').delete().eq('id', id);
+            loadAvaliacoes();
+        }
+
+        function resetAvaliacaoForm() {
+            document.getElementById('aval-id').value = '';
+            document.getElementById('aval-jogo').value = '';
+            document.getElementById('aval-nota').value = '';
+            document.getElementById('aval-comentario').value = '';
+            document.getElementById('aval-data').value = '';
+            document.getElementById('aval-form-title').innerText = "Cadastrar Avaliação";
+        }
+        
         /* ==========================================
            CONSULTAS
            ========================================== */
