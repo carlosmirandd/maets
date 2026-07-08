@@ -1,20 +1,48 @@
 INSERT INTO desenvolvedoras (nome, pais_origem, ano_fundacao, faturamento_anual) VALUES
-('Nintendo', 'Japão', '1889-09-23', 10000000.00),
-('Rockstar Games', 'EUA', '1998-12-01', 5000000.00),
-('CD Projekt Red', 'Polônia', '2002-05-01', 1000000.00),
-('FromSoftware', 'Japão', '1986-11-01', 800000.00),
-('MirandaGames', 'Brasil', '2026-01-01', 9.50);
+('Valve', 'EUA', '1996-08-24', 3000000.00),
+('Naughty Dog', 'EUA', '1984-09-27', 1500000.00),
+('Bethesda', 'EUA', '1986-06-28', 2000000.00),
+('Square Enix', 'Japão', '2003-04-01', 2500000.00),
+('Epic Games', 'EUA', '1991-01-15', 5500000.00),
+('Capcom', 'Japão', '1983-06-11', 1800000.00),
+('Ubisoft', 'França', '1986-03-28', 2200000.00),
+('Santa Monica Studio', 'EUA', '1999-01-01', 1200000.00),
+('Kojima Productions', 'Japão', '2005-12-16', 500000.00),
+('Larian Studios', 'Bélgica', '1996-01-01', 800000.00),
+('Electronic Arts', 'EUA', '1982-05-28', 4000000.00),
+('Activision', 'EUA', '1979-10-01', 3500000.00),
+('Ubisoft Montreal', 'Canadá', '1997-01-01', 1500000.00),
+('Obsidian', 'EUA', '2003-06-12', 400000.00),
+('Double Fine', 'EUA', '2000-07-01', 200000.00);
 
 INSERT INTO jogos (id_desenvolvedora, titulo, data_lancamento, preco, genero) VALUES
-(1, 'Mario Kart World', '2025-06-05', 425.90, 'Corrida'),
-(2, 'GTA V', '2013-09-17', 150.00, 'Ação'),
-(3, 'The Witcher 3', '2015-05-19', 120.00, 'RPG'),
-(4, 'Elden Ring', '2022-02-25', 250.00, 'RPG'),
-(1, 'Super Mario Odyssey', '2017-10-27', 299.90, 'Plataforma');
+(7, 'Half-Life 2', '2004-11-16', 32.99, 'FPS'),
+(8, 'The Last of Us', '2013-06-14', 199.90, 'Ação-Aventura'),
+(9, 'Skyrim', '2011-11-11', 149.00, 'RPG'),
+(10, 'Final Fantasy VII Remake', '2020-04-10', 250.00, 'RPG'),
+(11, 'Fortnite', '2017-07-25', 0.00, 'Battle Royale'),
+(12, 'Resident Evil 4', '2005-01-11', 150.00, 'Survival Horror'),
+(13, 'Assassin''s Creed II', '2009-11-17', 59.99, 'Ação-Aventura'),
+(14, 'God of War', '2018-04-20', 199.00, 'Ação-Aventura'),
+(15, 'Death Stranding', '2019-11-08', 159.00, 'Ação'),
+(16, 'Baldur''s Gate 3', '2023-08-03', 199.99, 'RPG'),
+(17, 'The Sims 4', '2014-09-02', 0.00, 'Simulação'),
+(18, 'Call of Duty: MW3', '2023-11-10', 350.00, 'FPS'),
+(19, 'Far Cry 3', '2012-11-29', 89.90, 'FPS'),
+(20, 'Fallout: New Vegas', '2010-10-19', 49.99, 'RPG'),
+(21, 'Psychonauts 2', '2021-08-25', 149.90, 'Plataforma');
 
 INSERT INTO avaliacoes (id_jogo, nota, comentario, data_avaliacao) VALUES
-(1, 5.0, 'A forma menos inteligente de dizer que tem dinheiro pra torrar.', '2023-01-10'),
-(2, 10.0, 'Gosto de jogar RP com meus amigos no FiveM.', '2023-02-15'),
-(3, 10.0, 'História incrível e sidequests épicas.', '2023-03-20'),
-(4, 9.8, 'Meu primo nerd gostou do jogo, então eu também gostei.', '2023-04-25'),
-(5, 9.0, 'Ótimo para todas as idades, muito criativo.', '2023-05-30');
+(7, 9.9, 'Um clássico que revolucionou os FPS.', '2024-02-10'),
+(8, 10.0, 'História emocionante, obra de arte.', '2024-03-15'),
+(9, 9.5, 'Cheio de bugs, mas incrível.', '2024-04-20'),
+(10, 9.0, 'Nostalgia e gráficos lindos.', '2024-05-25'),
+(11, 7.5, 'Divertido com amigos.', '2024-06-30'),
+(12, 9.8, 'Where is everyone going? Bingo?', '2024-07-05'),
+(13, 9.2, 'Ezio é o melhor protagonista.', '2024-08-10'),
+(14, 10.0, 'BOY! Jogo espetacular.', '2024-09-15'),
+(15, 8.5, 'Simulador de caminhada épico.', '2024-10-20'),
+(16, 10.0, 'GOTY indiscutível.', '2024-11-25'),
+(17, 7.0, 'Viciante, mas cara.', '2024-12-05'),
+(18, 6.5, 'Campanha curta.', '2025-01-10'),
+(19, 9.0, 'Vaas é um vilão incrível.', '2025-02-15');
